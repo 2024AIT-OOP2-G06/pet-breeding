@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>データ一覧</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <h1>ペット一覧</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
+    </ul>
+
+    <a href="{{ url_for('pet.add') }}">新しいペットを追加</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>名前</th>
+                <th>種類</th>
+                <!-- 
+                 <th>レベル</th>
+                 <th>幸福度</th>
+                 <th>&nbsp;</th>
+                -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for pet in items %}
+            <tr>
+                <td>{{ pet.name }}</td>
+                <!-- ToDo: pet.typeは整数になっているので、場合分けなどで種類名が表示されるようにする -->
+                <td>{{ pet.type }}</td>
+                <!-- ToDo: 現在のレベルを追加 -->
+                <!-- ToDo: 現在の幸福度を追加 -->
+                <!-- ToDo: できればペットの現在の成長状態の画像を追加 -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

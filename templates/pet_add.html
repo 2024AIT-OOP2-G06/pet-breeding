@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ペット作成</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <h1>新しいペットの作成</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
+        <li><a href="{{ url_for('pet.list') }}">ペット一覧</a></li>
+    </ul>
+
+    <!-- ToDo: 作成済みの種類のペットは作成できないようにする -->
+    <form action="{{ url_for('pet.add') }}" method="post">
+        <label>種類: </label> 
+        <label><input type="radio" name="type" value="0" required> 犬</label>
+        <!-- ToDo: 初期状態のペットの画像をそれぞれの間に入れる -->
+        <label><input type="radio" name="type" value="1" required> 猫</label>
+        <label><input type="radio" name="type" value="2" required> 鳥</label><br>
+        <label>名前: <input type="text" name="name" required></label><br>
+        <button type="submit">追加</button>
+    </form>
+</body>
+</html>
