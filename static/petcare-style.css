@@ -11,3 +11,11 @@ header {
     align-items: center;
     justify-content: center;
 }
+.pet-care {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 2rem;
+    background-image: image("images/pet-care.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
