@@ -3,20 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>ペット育成画面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='petcare-style.css') }}">
     <script src="pet.js"></script>
 </head>
 <body>
-    <h1>ペットを育てよう！</h1>
-    <ul class="breadcrumb">
-        <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
-    </ul>
-
-    <!-- ToDo: レベル・幸福度の可視化 -->
+    <header>
+        <h2>ペットを育てよう！</h2>
+        <ul class="breadcrumb">
+            <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
+        </ul>
+        <!-- ToDo: レベル・幸福度の可視化 -->
+        <!-- ToDo: レベル・幸福度の表示 -->
+        <div class="happiness">
+            <p>幸福度</p>
+            <div class="happiness-bar"></div>
+            <div class="happiness-var">{{ pet.happiness }}</div><!-- ペットの幸福度数値取り出し -->
+        </div>
+    </header>
+    
 
     <!-- ToDo: 状況に合ったペットの画像 -->
-     
+     <div class="pet-forcus">
+        <div class="pet-image">
+            <img src="" alt="">
+        </div>
+     </div>
     <!-- ToDo: 餌をあげる、遊ぶ、掃除する -->
-    
+    <footer class="actions">
+        <button class="feed-button">餌をあげる</button>
+        <button class="play-button">遊ぶ</button>
+        <button class="clean-button">掃除する</button>
+    </footer>
 </body>
 </html>
