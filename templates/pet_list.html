@@ -18,11 +18,9 @@
             <tr>
                 <th>名前</th>
                 <th>種類</th>
-                <!-- 
-                 <th>レベル</th>
-                 <th>幸福度</th>
-                 <th>&nbsp;</th>
-                -->
+                <th>レベル</th>
+                <th>幸福度</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
@@ -30,10 +28,33 @@
             <tr>
                 <td>{{ pet.name }}</td>
                 <!-- ToDo: pet.typeは整数になっているので、場合分けなどで種類名が表示されるようにする -->
-                <td>{{ pet.type }}</td>
+                <td>
+                    {% if pet.type == 0 %}
+                        犬
+                    {% elif pet.type == 1 %}
+                        猫
+                    {% elif pet.type == 2 %}
+                        鳥
+                    {% endif %}
+                </td>
                 <!-- ToDo: 現在のレベルを追加 -->
+                <td>{{ pet.level }}</td>
                 <!-- ToDo: 現在の幸福度を追加 -->
-                <!-- ToDo: できればペットの現在の成長状態の画像を追加 -->
+                <td>{{ pet.happiness }}</td>
+                <!-- ToDo: ペットの現在の成長状態の画像を追加 -->
+                <td>
+                    <div class="pet-option">
+                        <label>
+                            {% if pet.type == 0 %}
+                                <img src="{{ url_for('static', filename='images/dog.jpeg') }}" alt="犬の画像">
+                            {% elif pet.type == 1 %}
+                                <img src="{{ url_for('static', filename='images/cat.jpg') }}" alt="猫の画像">
+                            {% elif pet.type == 2 %}
+                                <img src="{{ url_for('static', filename='images/bird.jpg') }}" alt="鳥の画像">
+                            {% endif %}
+                        </label>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
