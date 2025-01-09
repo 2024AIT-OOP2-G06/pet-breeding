@@ -43,9 +43,30 @@
       {% for pet in items}
       <tr>
         <td>{{ pet.name }}</td>
-        <td>{{ pet.type }}</td>
+        <td>
+          {% if pet.type == 0 %}
+              犬
+          {% elif pet.type == 1 %}
+              猫
+          {% elif pet.type == 2 %}
+              鳥
+          {% endif %}
+        </td>
         <td>{{ pet.level }}</td>
         <td>{{ pet.happiness }}</td>
+        <td>
+          <div class="pet-option">
+              <label>
+                  {% if pet.type == 0 %}
+                      <img src="{{ url_for('static', filename='images/dog.jpeg') }}" alt="犬の画像">
+                  {% elif pet.type == 1 %}
+                      <img src="{{ url_for('static', filename='images/cat.jpg') }}" alt="猫の画像">
+                  {% elif pet.type == 2 %}
+                      <img src="{{ url_for('static', filename='images/bird.jpg') }}" alt="鳥の画像">
+                  {% endif %}
+              </label>
+          </div>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
