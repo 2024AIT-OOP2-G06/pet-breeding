@@ -1,3 +1,13 @@
+body {
+    background-image: url('images/pet-care-background.jpg');
+    background-size: cover;     
+    background-position: center; 
+    background-repeat: no-repeat; 
+    color: #333;                 
+    font-family: Arial, sans-serif;
+    height: 100vh;
+}
+
 header {
     display: flex;
     justify-content: space-between;
