@@ -1,3 +1,13 @@
+body {
+    background-image: url('images/pet-care-background.jpg');
+    background-size: cover;     
+    background-position: center; 
+    background-repeat: no-repeat; 
+    color: #333;                 
+    font-family: Arial, sans-serif;
+    height: 100vh;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -24,10 +34,10 @@ header {
 
 /* プログレスバーの実際の部分 */
 .progress-bar {
-  height: 100%;
-  width: 0%; /* 初期値は0 */
-  background-color: #4caf50;
-  transition: width 0.5s ease;
+    height: 100%;
+    width: 0%;  /* 初期値は0 */
+    background-color: #e289dc;
+    transition: width 0.5s ease;
 }
 
 /* 幸福度数値の表示 */

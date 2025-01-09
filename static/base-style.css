@@ -48,6 +48,7 @@ th {
 
 h3 { 
   margin-bottom: 5px; 
+  font-size: 24px;
 }
 
 ul { 
@@ -135,4 +136,19 @@ ul {
 
 .submit-button:hover {
   background-color: #0056b3;
+}
+
+.top_page {
+  display: flex;
+  justify-content: center;
+}
+
+.top_pet {
+  text-align: center;
+  margin: 0 100px;
+}
+
+.top_pet_list {
+  text-align: center;
+  margin-right: 390px;
 }
