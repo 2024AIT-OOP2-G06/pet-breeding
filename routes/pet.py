@@ -63,7 +63,13 @@ def care(pet_id):
             level_up_threshold = 70
             level_ups = pet.exp // level_up_threshold  # 経験値が70の倍数ごとにレベルアップ
             if level_ups > 0:
-                pet.level += level_ups
+                # レベルが最大値（10）に達していない場合のみレベルアップ
+                if pet.level < 10:
+                    pet.level += level_ups
+                    # レベルが10を超えないように調整
+                    if pet.level > 10:
+                        pet.level = 10
+                        
                 pet.exp %= level_up_threshold  # 余剰経験値を保存
 
         # データベースに保存
