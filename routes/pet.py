@@ -89,10 +89,10 @@ def care(pet_id):
                 pet.exp %= level_up_threshold  # 余剰経験値を保存
 
         # ペットのレベルが10に達した場合、自動的に削除
-        if pet.level >= 10:
-            pet.delete_instance()
-            flash('ペットがレベル10に達したため削除されました。', 'info')
-            return redirect(url_for('pet.list'))
+        #if pet.level >= 10:
+         #   pet.delete_instance()
+          #  flash('ペットがレベル10に達したため削除されました。', 'info')
+           # return redirect(url_for('pet.list'))
 
         # データベースに保存
         pet.save()
