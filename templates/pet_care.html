@@ -13,10 +13,18 @@
     </ul>
 
     <!-- ToDo: レベル・幸福度の可視化 -->
+    <p>幸福度: {{ pet.happiness }}</p>
+    <p>レベル: {{ pet.level }}</p>
 
     <!-- ToDo: 状況に合ったペットの画像 -->
      
     <!-- ToDo: 餌をあげる、遊ぶ、掃除する -->
+    <form method="POST">
+        <button type="submit" name="action" value="feed">餌をあげる (+20)</button>
+        <button type="submit" name="action" value="play">遊ぶ (+20)</button>
+        <button type="submit" name="action" value="clean">掃除する (+30)</button>
+        <button type="submit" name="action" value="reset">幸福度リセット（後で消す）</button>
+    </form>
     
 </body>
 </html>

@@ -14,7 +14,7 @@
     <h3>ペット育成</h3>
     <ul>
       {% for pet in pets %}
-        <li><a href="{{ url_for('pet.care', pet_id=pet.type) }}">
+        <li><a href="{{ url_for('pet.care', pet_id=pet.id) }}">
           {{ pet.name }}の世話をする
         </a></li>
       {% endfor %}
