@@ -25,6 +25,7 @@ def add():
     
     return render_template('pet_add.html')
 
+
 # ペット一覧画面
 @pet_bp.route('/list')
 def list():
@@ -51,6 +52,30 @@ def care(pet_id):
     pet = Pet.get_or_none(Pet.id == pet_id)
     if not pet:
         return redirect(url_for('pet.list'))
+    
+    # 幸福度、成長段階、ペットタイプに基づいて画像のファイル名を決定
+    happiness = pet.happiness
+    level = pet.level
+    pet_type = pet.type  # 0:犬, 1:猫, 2:鳥
+
+    # 表情の計算 (幸福度に基づいて)
+    if happiness >= 66:
+        expression = 'happy'
+    elif happiness >= 33:
+        expression = 'neutral'
+    else:
+        expression = 'sad'
+    
+    # 成長段階の計算 (レベルに基づいて)
+    if level >= 6:
+        growth_stage = 'adult'
+    elif level >= 3:
+        growth_stage = 'young'
+    else:
+        growth_stage = 'baby'
+
+    # ペットタイプごとに画像の名前を決定
+    image_filename = f"{['dog', 'cat', 'bird'][pet_type]}_{growth_stage}_{expression}.jpg"
     
     if request.method == 'POST':
         # アクションに応じて幸福度を増加
@@ -98,8 +123,8 @@ def care(pet_id):
         pet.save()
 
         return redirect(url_for('pet.care', pet_id=pet_id))
- 
-    return render_template('pet_care.html', pet=pet)
+    # テンプレートに渡す
+    return render_template('pet_care.html', pet=pet, image_filename=image_filename)
 
 # 幸福度の状態を返すAPI
 @pet_bp.route('/state/<int:pet_id>', methods=['GET'])

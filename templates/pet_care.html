@@ -1,63 +1,79 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>ペット育成画面</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='petcare-style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='base-style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='petcare-style.css') }}"
+    />
     <script src="pet.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h2>ペットを育てよう！</h2>
-        <ul class="breadcrumb">
-            <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
-        </ul>
-        <!-- ToDo: レベル・幸福度の可視化 -->
-        <!-- ToDo: レベル・幸福度の表示 -->
-        <div class="happiness">
-            <p>幸福度</p>
-            <div class="progress-container">
-                <div class="progress-bar" id="happiness-bar"></div>
-            </div>
-            <div class="happiness-var" id="happiness-var">{{ pet.happiness }}</div>
+      <h2>ペットを育てよう！</h2>
+      <ul class="breadcrumb">
+        <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
+      </ul>
+      <!-- ToDo: レベル・幸福度の可視化 -->
+      <!-- ToDo: レベル・幸福度の表示 -->
+      <div class="happiness">
+        <p>幸福度</p>
+        <div class="progress-container">
+          <div class="progress-bar" id="happiness-bar"></div>
         </div>
-        <div class="level">
-            <p>レベル: {{ pet.level }}</p>
-        </div>
+        <div class="happiness-var" id="happiness-var">{{ pet.happiness }}</div>
+      </div>
+      <div class="level">
+        <p>レベル: {{ pet.level }}</p>
+      </div>
     </header>
-   
+
     <!-- ToDo: 状況に合ったペットの画像 -->
-     <div class="pet-forcus">
-        <div class="pet-image">
-            <img src="" alt="">
-        </div>
-     </div>
-  
+    <div class="pet-forcus">
+      <div class="pet-image">
+        <!-- 動的に画像パスを挿入 -->
+        <img
+          src="{{ url_for('static', filename='images/' + image_filename) }}"
+          alt="Pet Image"
+        />
+      </div>
+    </div>
+
     <!-- ToDo: 餌をあげる、遊ぶ、掃除する -->
     <form method="POST">
       <footer class="actions">
-        <button type="submit" name="action" value="feed" class="feed-button">餌をあげる</button>
-        <button type="submit" name="action" value="play" class="play-button">遊ぶ</button>
-        <button type="submit" name="action" value="clean" class="clean-button">掃除する</button>
-        <button type="submit" name="action" value="reset">幸福度リセット（後で消す）</button>
+        <button type="submit" name="action" value="feed" class="feed-button">
+          餌をあげる
+        </button>
+        <button type="submit" name="action" value="play" class="play-button">
+          遊ぶ
+        </button>
+        <button type="submit" name="action" value="clean" class="clean-button">
+          掃除する
+        </button>
+        <button type="submit" name="action" value="reset">
+          幸福度リセット（後で消す）
+        </button>
       </footer>
     </form>
     <script>
-        // 幸福度を時間経過で減少させる処理
-        async function fetchState() {
-            const response = await fetch('/state/{{ pet.id }}');
-            const state = await response.json();
-            document.getElementById('happiness-var').textContent = state.happiness;
-            const progressBar = document.getElementById('happiness-bar');
-            progressBar.style.width = (state.happiness / 100 * 100) + '%';
-        }
+      // 幸福度を時間経過で減少させる処理
+      async function fetchState() {
+        const response = await fetch("/state/{{ pet.id }}");
+        const state = await response.json();
+        document.getElementById("happiness-var").textContent = state.happiness;
+        const progressBar = document.getElementById("happiness-bar");
+        progressBar.style.width = (state.happiness / 100) * 100 + "%";
+      }
 
-        // 定期的に状態を更新
-        setInterval(fetchState, 10000);  // 状態を1秒ごとに取得
+      // 定期的に状態を更新
+      setInterval(fetchState, 10000); // 状態を1秒ごとに取得
     </script>
-
-
-</body>
+  </body>
 </html>

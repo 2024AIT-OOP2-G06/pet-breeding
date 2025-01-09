@@ -9,27 +9,27 @@ body {
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ccc;
 }
 .actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* プログレスバーのコンテナ */
 .progress-container {
-    width: 800px;
-    background-color: #f3f3f3;
-    border-radius: 25px;
-    overflow: hidden;
-    height: 30px;
-    margin: 20px 0;
+  width: 100%;
+  background-color: #f3f3f3;
+  border-radius: 25px;
+  overflow: hidden;
+  height: 30px;
+  margin: 20px 0;
 }
 
 /* プログレスバーの実際の部分 */
@@ -42,7 +42,14 @@ header {
 
 /* 幸福度数値の表示 */
 .happiness-var {
-    font-size: 20px;
-    margin-top: 10px;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
+.pet-image {
+  text-align: center; /* 親要素にtext-alignを指定 */
+}
+
+.pet-image img {
+  height: 60vh;
+}
