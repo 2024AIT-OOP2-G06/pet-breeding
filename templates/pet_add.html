@@ -12,15 +12,35 @@
         <li><a href="{{ url_for('pet.list') }}">ペット一覧</a></li>
     </ul>
 
+    <div class="label-center">種類を選んでね</div>
+    
     <!-- ToDo: 作成済みの種類のペットは作成できないようにする -->
-    <form action="{{ url_for('pet.add') }}" method="post">
-        <label>種類: </label> 
-        <label><input type="radio" name="type" value="0" required> 犬</label>
-        <!-- ToDo: 初期状態のペットの画像をそれぞれの間に入れる -->
-        <label><input type="radio" name="type" value="1" required> 猫</label>
-        <label><input type="radio" name="type" value="2" required> 鳥</label><br>
-        <label>名前: <input type="text" name="name" required></label><br>
-        <button type="submit">追加</button>
+    <form action="{{ url_for('pet.add') }}" method="post" class="pet-form">
+        <div class="pet-selection">
+            <div class="pet-option">
+                <input type="radio" id="dog" name="type" value="0" required>
+                <label for="dog">
+                    <img src="{{ url_for('static', filename='images/dog.jpeg') }}" alt="犬の画像">
+                </label>
+            </div>
+            <div class="pet-option">
+                <input type="radio" id="cat" name="type" value="1" required>
+                <label for="cat">
+                    <img src="{{ url_for('static', filename='images/cat.jpg') }}" alt="猫の画像">
+                </label>
+            </div>
+            <div class="pet-option">
+                <input type="radio" id="bird" name="type" value="2" required>
+                <label for="bird">
+                    <img src="{{ url_for('static', filename='images/bird.jpg') }}" alt="鳥の画像">
+                </label>
+            </div>
+        </div>
+
+        <!-- ペットの名前入力欄 -->
+        <label for="name" class="name-label">ペットの名前を入力してね</label>
+        <input type="text" id="name" name="name" class="name-input" required>
+        <button type="submit" class="submit-button">作成</button>
     </form>
 </body>
 </html>
