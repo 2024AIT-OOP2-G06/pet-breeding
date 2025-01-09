@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash,jsonify
 from models import Pet
+import time
+import threading
 
 # Blueprintの作成
 pet_bp = Blueprint('pet', __name__, url_prefix='/')
@@ -28,6 +30,20 @@ def add():
 def list():
     pets = Pet.select()
     return render_template('pet_list.html', items=pets)
+
+# 幸福度を減少させる関数（10秒ごとに実行）
+def decrease_happiness_periodically():
+    while True:
+        time.sleep(10)  # 10秒待機
+        pets = Pet.select()  # 全てのペットを取得
+        for pet in pets:
+            if pet.happiness > 0:
+                pet.happiness -= 1  # 幸福度を1減少
+                pet.save()  # 更新を保存
+
+# 別スレッドで定期的に幸福度を減少させる処理を実行
+threading.Thread(target=decrease_happiness_periodically, daemon=True).start()
+
 
 # ペット育成画面
 @pet_bp.route('/care/<int:pet_id>', methods=['GET', 'POST'])
@@ -73,3 +89,15 @@ def care(pet_id):
  
     return render_template('pet_care.html', pet=pet)
 
+# 幸福度の状態を返すAPI
+@pet_bp.route('/state/<int:pet_id>', methods=['GET'])
+def get_state(pet_id):
+    pet = Pet.get_or_none(Pet.id == pet_id)
+    if not pet:
+        return jsonify({'error': 'Pet not found'}), 404
+    
+    return jsonify({
+        'happiness': pet.happiness,
+        'level': pet.level,
+        'exp': pet.exp
+    })

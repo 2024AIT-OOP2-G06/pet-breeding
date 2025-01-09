@@ -18,8 +18,10 @@
         <!-- ToDo: レベル・幸福度の表示 -->
         <div class="happiness">
             <p>幸福度</p>
-            <div class="happiness-bar"></div>
-            <div class="happiness-var">{{ pet.happiness }}</div><!-- ペットの幸福度数値取り出し -->
+            <div class="progress-container">
+                <div class="progress-bar" id="happiness-bar"></div>
+            </div>
+            <div class="happiness-var" id="happiness-var">{{ pet.happiness }}</div>
         </div>
         <div class="level">
             <p>レベル: {{ pet.level }}</p>
@@ -42,6 +44,20 @@
         <button type="submit" name="action" value="reset">幸福度リセット（後で消す）</button>
       </footer>
     </form>
+    <script>
+        // 幸福度を時間経過で減少させる処理
+        async function fetchState() {
+            const response = await fetch('/state/{{ pet.id }}');
+            const state = await response.json();
+            document.getElementById('happiness-var').textContent = state.happiness;
+            const progressBar = document.getElementById('happiness-bar');
+            progressBar.style.width = (state.happiness / 100 * 100) + '%';
+        }
+
+        // 定期的に状態を更新
+        setInterval(fetchState, 10000);  // 状態を1秒ごとに取得
+    </script>
+
 
 </body>
 </html>
