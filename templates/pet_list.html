@@ -6,13 +6,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 </head>
 <body>
-    <h1>ペット一覧</h1>
-    <ul class="breadcrumb">
-        <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
-    </ul>
-
-    <a href="{{ url_for('pet.add') }}">新しいペットを追加</a>
-
     <table>
         <thead>
             <tr>
@@ -24,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for pet in items %}
+            {% for pet in pets %}
             <tr>
                 <td>{{ pet.name }}</td>
                 <!-- ToDo: pet.typeは整数になっているので、場合分けなどで種類名が表示されるようにする -->

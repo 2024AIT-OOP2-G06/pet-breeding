@@ -30,7 +30,7 @@ def add():
 @pet_bp.route('/list')
 def list():
     pets = Pet.select()
-    return render_template('pet_list.html', items=pets)
+    return render_template('pet_list.html', pets=pets)
 
 # 幸福度を減少させる関数（10秒ごとに実行）
 def decrease_happiness_periodically():
