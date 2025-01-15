@@ -36,7 +36,7 @@
                 <td id="pet-happiness-{{ pet.id }}">{{ pet.happiness }}</td>
                 <!-- ToDo: ペットの現在の成長状態の画像を追加 -->
                 <td>
-                    <div class="pet-option">
+                    <div class="pet-list-image">
                         <label>
                             {% set pet_types = ['dog', 'cat', 'bird'] %}
                             {% set growth_stage = 'adult' if pet.level >= 6 else 'young' if pet.level >= 3 else 'baby' %}

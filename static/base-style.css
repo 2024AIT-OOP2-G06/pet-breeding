@@ -152,3 +152,9 @@ ul {
   text-align: center;
   margin-right: 390px;
 }
+
+.pet-list-image img {
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
