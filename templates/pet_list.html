@@ -38,13 +38,9 @@
                 <td>
                     <div class="pet-option">
                         <label>
-                            {% if pet.type == 0 %}
-                                <img src="{{ url_for('static', filename='images/dog.jpeg') }}" alt="犬の画像">
-                            {% elif pet.type == 1 %}
-                                <img src="{{ url_for('static', filename='images/cat.jpg') }}" alt="猫の画像">
-                            {% elif pet.type == 2 %}
-                                <img src="{{ url_for('static', filename='images/bird.jpg') }}" alt="鳥の画像">
-                            {% endif %}
+                            {% set pet_types = ['dog', 'cat', 'bird'] %}
+                            {% set growth_stage = 'adult' if pet.level >= 6 else 'young' if pet.level >= 3 else 'baby' %}
+                            <img src="{{ url_for('static', filename='images/' + pet_types[pet.type] + '_' + growth_stage + '_neutral.jpg') }}" alt="ペットの画像">
                         </label>
                     </div>
                 </td>

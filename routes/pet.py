@@ -90,6 +90,8 @@ def care(pet_id):
             happiness_increase = 30
         elif action == 'reset':
             pet.happiness = 0
+        elif action == 'reset-level':
+            pet.level = 1
             pet.save()
             return redirect(url_for('pet.care', pet_id=pet_id))
 
