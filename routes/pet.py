@@ -138,3 +138,16 @@ def get_state(pet_id):
         'level': pet.level,
         'exp': pet.exp
     })
+
+# 全てのペットの幸福度の状態を返すAPI
+@pet_bp.route("/states", methods=["GET"])
+def get_all_states():
+    pets = Pet.select()
+
+    pets_data = [{
+        "id": pet.id,
+        "happiness": pet.happiness, 
+        "level": pet.level
+    } for pet in pets]
+
+    return jsonify(pets_data)
