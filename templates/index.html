@@ -27,50 +27,8 @@
   </div>
   <div class="top_pet_list">
     <h3>ペット一覧</h3>
-    <li><a href="{{ url_for('pet.list') }}">ペット一覧</a></li>
   </div>
-  <table>
-    <thead>
-      <tr>
-        <th>名前</th>
-        <th>種類</th>
-        <th>レベル</th>
-        <th>幸福度</th>
-        <th>&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for pet in pets %}
-      <tr>
-        <td>{{ pet.name }}</td>
-        <td>
-          {% if pet.type == 0 %}
-              犬
-          {% elif pet.type == 1 %}
-              猫
-          {% elif pet.type == 2 %}
-              鳥
-          {% endif %}
-        </td>
-        <td>{{ pet.level }}</td>
-        <td>{{ pet.happiness }}</td>
-        <td>
-          <div class="pet-option">
-              <label>
-                  {% if pet.type == 0 %}
-                      <img src="{{ url_for('static', filename='images/dog.jpeg') }}" alt="犬の画像">
-                  {% elif pet.type == 1 %}
-                      <img src="{{ url_for('static', filename='images/cat.jpg') }}" alt="猫の画像">
-                  {% elif pet.type == 2 %}
-                      <img src="{{ url_for('static', filename='images/bird.jpg') }}" alt="鳥の画像">
-                  {% endif %}
-              </label>
-          </div>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  {% include 'pet_list.html' %}
 
 </body>
 
