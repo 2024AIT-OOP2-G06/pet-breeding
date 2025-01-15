@@ -40,7 +40,10 @@
                         <label>
                             {% set pet_types = ['dog', 'cat', 'bird'] %}
                             {% set growth_stage = 'adult' if pet.level >= 6 else 'young' if pet.level >= 3 else 'baby' %}
-                            <img src="{{ url_for('static', filename='images/' + pet_types[pet.type] + '_' + growth_stage + '_neutral.jpg') }}" alt="ペットの画像">
+                            <a href="{{ url_for('pet.care', pet_id=pet.id) }}">
+                                <img src="{{ url_for('static', filename='images/' + pet_types[pet.type] + '_' + growth_stage + '_neutral.jpg') }}" 
+                                     alt="ペットの画像">
+                            </a>
                         </label>
                     </div>
                 </td>
