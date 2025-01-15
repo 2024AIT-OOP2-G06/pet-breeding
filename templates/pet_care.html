@@ -60,6 +60,9 @@
         <button type="submit" name="action" value="reset">
           幸福度リセット（後で消す）
         </button>
+        <button type="submit" name="action" value="reset-level">
+          レベルリセット（後で消す）
+        </button>
       </footer>
     </form>
     <script>
@@ -73,7 +76,7 @@
       }
 
       // 定期的に状態を更新
-      setInterval(fetchState, 10000); // 状態を1秒ごとに取得
+      setInterval(fetchState, 1000); // 状態を1秒ごとに取得
     </script>
   </body>
 </html>

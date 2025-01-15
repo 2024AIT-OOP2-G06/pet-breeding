@@ -33,18 +33,17 @@
                 <!-- ToDo: 現在のレベルを追加 -->
                 <td>{{ pet.level }}</td>
                 <!-- ToDo: 現在の幸福度を追加 -->
-                <td>{{ pet.happiness }}</td>
+                <td id="pet-happiness-{{ pet.id }}">{{ pet.happiness }}</td>
                 <!-- ToDo: ペットの現在の成長状態の画像を追加 -->
                 <td>
-                    <div class="pet-option">
+                    <div class="pet-list-image">
                         <label>
-                            {% if pet.type == 0 %}
-                                <img src="{{ url_for('static', filename='images/dog.jpeg') }}" alt="犬の画像">
-                            {% elif pet.type == 1 %}
-                                <img src="{{ url_for('static', filename='images/cat.jpg') }}" alt="猫の画像">
-                            {% elif pet.type == 2 %}
-                                <img src="{{ url_for('static', filename='images/bird.jpg') }}" alt="鳥の画像">
-                            {% endif %}
+                            {% set pet_types = ['dog', 'cat', 'bird'] %}
+                            {% set growth_stage = 'adult' if pet.level >= 6 else 'young' if pet.level >= 3 else 'baby' %}
+                            <a href="{{ url_for('pet.care', pet_id=pet.id) }}">
+                                <img src="{{ url_for('static', filename='images/' + pet_types[pet.type] + '_' + growth_stage + '_neutral.jpg') }}" 
+                                     alt="ペットの画像">
+                            </a>
                         </label>
                     </div>
                 </td>
@@ -52,5 +51,23 @@
             {% endfor %}
         </tbody>
     </table>
+    <script>
+        async function fetchAllStates() {
+            const response = await fetch("/states");
+            const petStates = await response.json();
+    
+            // 取得したペットデータを更新
+            petStates.forEach(pet => {
+                const happinessElem = document.getElementById(`pet-happiness-${pet.id}`);
+                
+                if (happinessElem) {
+                    happinessElem.textContent = pet.happiness;
+                }
+            });
+        }
+    
+        // 1秒ごとに全てのペット情報を更新
+        setInterval(fetchAllStates, 1000);
+    </script>
 </body>
 </html>
