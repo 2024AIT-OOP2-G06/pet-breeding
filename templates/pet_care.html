@@ -16,7 +16,7 @@
   </head>
   <body>
     <header>
-      <h2>ペットを育てよう！</h2>
+      {{ pet.name }}を育てよう！
       <ul class="breadcrumb">
         <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
       </ul>
@@ -57,12 +57,12 @@
         <button type="submit" name="action" value="clean" class="clean-button">
           掃除する
         </button>
-        <button type="submit" name="action" value="reset">
+     <!--   <button type="submit" name="action" value="reset">
           幸福度リセット（後で消す）
         </button>
         <button type="submit" name="action" value="reset-level">
           レベルリセット（後で消す）
-        </button>
+        </button> -->
       </footer>
     </form>
     <script>
