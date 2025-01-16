@@ -21,14 +21,22 @@ def add():
         type = request.form['type']
 
         Pet.create(name=name, type=type)
-        return redirect(url_for('pet.list'))
+        return redirect(url_for('pet.index'))
     
     return render_template('pet_add.html')
 
 
 # ペット一覧画面
-@pet_bp.route('/list')
+@pet_bp.route('/list', methods=['GET', 'POST'])
 def list():
+    if request.method == 'POST':
+        pet_id = request.form.get('pet_id')  # フォームからpet_idを取得
+        if pet_id:
+            pet = Pet.get_or_none(Pet.id == pet_id)
+            if pet and pet.level >= 10:  # レベル10以上のペットのみ削除
+                pet.delete_instance()  # ペットを削除
+        return redirect(url_for('pet.index'))
+    
     pets = Pet.select()
     return render_template('pet_list.html', pets=pets)
 
