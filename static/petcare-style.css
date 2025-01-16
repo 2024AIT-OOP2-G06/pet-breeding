@@ -24,7 +24,7 @@ header {
 
 /* プログレスバーのコンテナ */
 .progress-container {
-  width: 100%;
+  width: 800px;
   background-color: #f3f3f3;
   border-radius: 25px;
   overflow: hidden;
