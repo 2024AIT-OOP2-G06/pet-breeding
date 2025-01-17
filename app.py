@@ -3,6 +3,7 @@ from models import initialize_database
 from routes import blueprints
 
 app = Flask(__name__)
+app.secret_key = 'my_secret_key'  # 秘密のキーを設定
 
 # データベースの初期化
 initialize_database()

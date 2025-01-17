@@ -34,6 +34,16 @@ header {
 .actions button:hover {
   background-color: #0056b3;
 }
+.actions button:disabled {
+  background-color: #cccccc; 
+  color: #666666;
+  cursor: not-allowed; 
+}
+.actions button.cooldown {
+  background-color: #cccccc;  /* クールタイム中の色 */
+  color: #666666;  /* 文字色 */
+  cursor: not-allowed;  /* 禁止カーソル */
+}
 
 /* プログレスバーのコンテナ */
 .progress-container {
