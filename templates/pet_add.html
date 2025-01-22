@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>ペット作成</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='index-style.css') }}">
 </head>
+
 <body>
     <h1>新しいペットの作成</h1>
     <ul class="breadcrumb">
@@ -13,7 +15,17 @@
     </ul>
 
     <div class="label-center">種類を選んでね</div>
-    
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ messages}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
     <!-- ToDo: 作成済みの種類のペットは作成できないようにする -->
     <form action="{{ url_for('pet.add') }}" method="post" class="pet-form">
         <div class="pet-selection">
@@ -43,4 +55,5 @@
         <button type="submit" class="submit-button">作成</button>
     </form>
 </body>
+
 </html>

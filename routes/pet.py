@@ -19,6 +19,11 @@ def add():
     if request.method == 'POST':
         name = request.form['name']
         type = request.form['type']
+        pets = Pet.select()  # データベースから全てのペットを取得
+        for pet in pets: # 取得したデータベースのデータを１行ずつ検査
+            if str(pet.type) == type: #選択されたペットの種類がデータベースに存在するかチェック
+                flash("選択されたペットは既に登録されています", "error") #画面側(HTML)にメッセージを送信
+                return render_template('pet_add.html') #画面はペット作成画面のまま戻る
 
         Pet.create(name=name, type=type)
         return redirect(url_for('pet.index'))
@@ -231,5 +236,5 @@ def get_cooldown(pet_id):
         else:
             remaining_time = 0
         cooldowns[action] = remaining_time
-    
+
     return jsonify(cooldowns)
