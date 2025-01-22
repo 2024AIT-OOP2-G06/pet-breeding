@@ -20,13 +20,13 @@ table {
 }
 
 th, td {
-  border: 1px solid #ddd;
+  border: 1px solid #e5cdbf;
   padding: 8px;
   text-align: center;
 }
 
 th {
-  background-color: #f4f4f4;
+  background-color: #f5e5d5;
 }
 
 .breadcrumb {
@@ -161,4 +161,11 @@ ul {
 
 .pet-list-image img:hover {
   transform: scale(1.02);
+}
+
+.flash-messages {
+  list-style: none;
+  text-align: center;
+  margin-bottom: 25px;
+  color: red;
 }
