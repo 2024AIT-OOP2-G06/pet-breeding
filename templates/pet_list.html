@@ -6,37 +6,80 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 </head>
 <body>
-    <h1>ペット一覧</h1>
-    <ul class="breadcrumb">
-        <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
-    </ul>
-
-    <a href="{{ url_for('pet.add') }}">新しいペットを追加</a>
-
     <table>
         <thead>
             <tr>
                 <th>名前</th>
                 <th>種類</th>
-                <!-- 
-                 <th>レベル</th>
-                 <th>幸福度</th>
-                 <th>&nbsp;</th>
-                -->
+                <th>レベル</th>
+                <th>幸福度</th>
+                <th>&nbsp;</th>
+                <th>お別れ</th>
             </tr>
         </thead>
         <tbody>
-            {% for pet in items %}
+            {% for pet in pets %}
             <tr>
                 <td>{{ pet.name }}</td>
                 <!-- ToDo: pet.typeは整数になっているので、場合分けなどで種類名が表示されるようにする -->
-                <td>{{ pet.type }}</td>
+                <td>
+                    {% if pet.type == 0 %}
+                        犬
+                    {% elif pet.type == 1 %}
+                        猫
+                    {% elif pet.type == 2 %}
+                        鳥
+                    {% endif %}
+                </td>
                 <!-- ToDo: 現在のレベルを追加 -->
+                <td>{{ pet.level }}</td>
                 <!-- ToDo: 現在の幸福度を追加 -->
-                <!-- ToDo: できればペットの現在の成長状態の画像を追加 -->
+                <td id="pet-happiness-{{ pet.id }}">{{ pet.happiness }}</td>
+                <!-- ToDo: ペットの現在の成長状態の画像を追加 -->
+                <td>
+                    <div class="pet-list-image">
+                        <label>
+                            {% set pet_types = ['dog', 'cat', 'bird'] %}
+                            {% set growth_stage = 'adult' if pet.level >= 6 else 'young' if pet.level >= 3 else 'baby' %}
+                            <a href="{{ url_for('pet.care', pet_id=pet.id) }}">
+                                <img src="{{ url_for('static', filename='images/' + pet_types[pet.type] + '_' + growth_stage + '_neutral.jpg') }}" 
+                                     alt="ペットの画像">
+                            </a>
+                        </label>
+                    </div>
+                </td>
+                <!-- お別れ -->
+                <td>
+                    {% if pet.level >= 10 %}
+                        <form action="{{ url_for('pet.list') }}" method="post">
+                            <input type="hidden" name="pet_id" value="{{ pet.id }}">
+                            <button type="submit">里親に出す</button>
+                        </form>
+                    {% else %}
+                        <span>条件: レベル10</span>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <script>
+        async function fetchAllStates() {
+            const response = await fetch("/states");
+            const petStates = await response.json();
+    
+            // 取得したペットデータを更新
+            petStates.forEach(pet => {
+                const happinessElem = document.getElementById(`pet-happiness-${pet.id}`);
+                
+                if (happinessElem) {
+                    happinessElem.textContent = pet.happiness;
+                }
+            });
+        }
+    
+        // 1秒ごとに全てのペット情報を更新
+        setInterval(fetchAllStates, 1000);
+    </script>
 </body>
 </html>

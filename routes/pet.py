@@ -236,5 +236,5 @@ def get_cooldown(pet_id):
         else:
             remaining_time = 0
         cooldowns[action] = remaining_time
-    
+
     return jsonify(cooldowns)

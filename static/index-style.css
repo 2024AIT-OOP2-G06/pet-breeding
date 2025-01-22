@@ -1,0 +1,13 @@
+body {
+    background-image: 
+    url("images/index_background.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 1450px 700px;
+    background-attachment: fixed;
+   }
+
+.index1 {
+    font-family: cursive;
+    font-size: 70px;
+}

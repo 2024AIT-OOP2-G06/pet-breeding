@@ -1,47 +1,133 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>ペット育成画面</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='petcare-style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='base-style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='petcare-style.css') }}"
+    />
     <script src="pet.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h2>ペットを育てよう！</h2>
-        <ul class="breadcrumb">
-            <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
-        </ul>
-        <!-- ToDo: レベル・幸福度の可視化 -->
-        <!-- ToDo: レベル・幸福度の表示 -->
-        <div class="happiness">
-            <p>幸福度</p>
-            <div class="happiness-bar"></div>
-            <div class="happiness-var">{{ pet.happiness }}</div><!-- ペットの幸福度数値取り出し -->
+      {{ pet.name }}を育てよう！
+      <ul class="breadcrumb">
+        <li><a href="{{ url_for('pet.index') }}">HOME</a></li>
+      </ul>
+      <!-- ToDo: レベル・幸福度の可視化 -->
+      <!-- ToDo: レベル・幸福度の表示 -->
+      <div class="happiness">
+        <p>幸福度</p>
+        <div class="progress-container">
+          <div class="progress-bar" id="happiness-bar"></div>
         </div>
-        <div class="level">
-            <p>レベル: {{ pet.level }}</p>
-        </div>
+        <div class="happiness-var" id="happiness-var">{{ pet.happiness }}</div>
+      </div>
+      <div class="level">
+        <p>レベル: {{ pet.level }}</p>
+      </div>
     </header>
-   
+
     <!-- ToDo: 状況に合ったペットの画像 -->
-     <div class="pet-forcus">
-        <div class="pet-image">
-            <img src="" alt="">
-        </div>
-     </div>
-  
+    <div class="pet-forcus">
+      <div class="pet-image">
+        <!-- 動的に画像パスを挿入 -->
+        <img
+          src="{{ url_for('static', filename='images/' + image_filename) }}"
+          alt="Pet Image"
+        />
+      </div>
+    </div>
+
     <!-- ToDo: 餌をあげる、遊ぶ、掃除する -->
-    <form method="POST">
+    <form method="POST" action="{{ url_for('pet.care', pet_id=pet.id) }}">
       <footer class="actions">
-        <button type="submit" name="action" value="feed" class="feed-button">餌をあげる</button>
-        <button type="submit" name="action" value="play" class="play-button">遊ぶ</button>
-        <button type="submit" name="action" value="clean" class="clean-button">掃除する</button>
-        <button type="submit" name="action" value="reset">幸福度リセット（後で消す）</button>
+        <button type="submit" name="action" value="feed" id="feed-button-{{ pet.id }}" class="pet-id" data-pet-id="{{ pet.id }}">
+          餌をあげる
+        </button>
+        <button type="submit" name="action" value="play" id="play-button-{{ pet.id }}" class="pet-id" data-pet-id="{{ pet.id }}">
+          遊ぶ
+        </button>
+        <button type="submit" name="action" value="clean" id="clean-button-{{ pet.id }}" class="pet-id" data-pet-id="{{ pet.id }}">
+          掃除する
+        </button>
+     <!--   <button type="submit" name="action" value="reset">
+          幸福度リセット（後で消す）
+        </button>
+        <button type="submit" name="action" value="reset-level">
+          レベルリセット（後で消す）
+        </button> -->
       </footer>
     </form>
+    <script>
+      // 幸福度を時間経過で減少させる処理
+      async function fetchState() {
+        const response = await fetch("/state/{{ pet.id }}");
+        const state = await response.json();
+        document.getElementById("happiness-var").textContent = state.happiness;
+        const progressBar = document.getElementById("happiness-bar");
+        progressBar.style.width = (state.happiness / 100) * 100 + "%";
+      }
 
-</body>
+      // 定期的に状態を更新
+      setInterval(fetchState, 1000); // 状態を1秒ごとに取得
+
+      function updateCooldown(petId) {
+        // クールタイムをサーバーから取得
+        fetch(`/cooldown/${petId}`)
+          .then(response => response.json())
+          .then(data => {
+            // アクションに対応する日本語テキストのマッピング
+            const actionTextMap = {
+              feed: '餌をあげる',
+              play: '遊ぶ',
+              clean: '掃除する'
+            };
+
+            // 各アクションのクールタイムをボタンのテキストに反映
+            for (const action in data) {
+              const button = document.querySelector(`#${action}-button-${petId}`);
+              const remainingTime = data[action];
+
+              if (remainingTime > 0) {
+                button.classList.add('cooldown');
+                button.innerText = `${actionTextMap[action]} (${Math.ceil(remainingTime)}秒)`;
+                button.disabled = true; // クールタイム中はボタンを無効にする
+              } else {
+                button.classList.remove('cooldown');
+                button.innerText = `${actionTextMap[action]}`; // クールタイムが終了したら元のテキストに戻す
+                button.disabled = false; // ボタンを有効にする
+              }
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching cooldown data:', error);
+          });
+      }
+
+      // ページ読み込み時に全てのpetIdについてクールタイムを更新
+      window.onload = function() {
+        const petIds = document.querySelectorAll('.pet-id'); // pet-idクラスを持つ要素を選択
+        petIds.forEach(pet => {
+          const petId = pet.dataset.petId; // pet-idクラスからpetIdを取得
+          updateCooldown(petId); // 各petIdに対してupdateCooldownを実行
+        });
+
+        // 1秒ごとにクールタイムを更新
+        setInterval(() => {
+          petIds.forEach(pet => {
+            const petId = pet.dataset.petId;
+            updateCooldown(petId); // 各petIdに対してupdateCooldownを実行
+          });
+        }, 1000);
+      };
+
+    </script>
+  </body>
 </html>

@@ -16,12 +16,13 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 2rem;
+  background-color: white;
 }
 
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
+  text-align: center;
 }
 
 th {
@@ -48,6 +49,7 @@ th {
 
 h3 { 
   margin-bottom: 5px; 
+  font-size: 24px;
 }
 
 ul { 
@@ -135,4 +137,28 @@ ul {
 
 .submit-button:hover {
   background-color: #0056b3;
+}
+
+.top_page {
+  display: flex;
+  justify-content: center;
+}
+
+.top_pet {
+  text-align: center;
+  margin: 0 100px;
+}
+
+.top_pet_list {
+  text-align: center;
+}
+
+.pet-list-image img {
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.pet-list-image img:hover {
+  transform: scale(1.02);
 }
