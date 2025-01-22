@@ -123,13 +123,11 @@ def care(pet_id):
         # アクションに応じて幸福度を増加
         action = request.form.get('action')
         if action not in COOLDOWN_TIMES:
-            flash("無効なアクションです。", "error")
             return redirect(url_for('pet.care', pet_id=pet_id))
         
         # クールタイムの確認
         last_time = last_action_times.get(action)
         if last_time and (now - last_time).total_seconds() < COOLDOWN_TIMES[action]:
-            flash("クールタイム中です。", "error")
             return redirect(url_for('pet.care', pet_id=pet_id))
         
         # アクション実行
@@ -180,7 +178,6 @@ def care(pet_id):
 
         # データベースに保存
         pet.save()
-        flash(f"{action}を実行しました！", "success")
 
         # クールタイム進捗の再計算
         cooldown_progress = calculate_cooldown_progress()
